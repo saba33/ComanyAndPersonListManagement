@@ -1,0 +1,333 @@
+﻿@model IEnumerable<MyShop.Core.Models.Person>
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .go-back {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+        .go-back img {
+            height: 25px;
+            width: 25px;
+        }
+
+    .go-back_title span {
+        margin-left: 10px;
+        font-size: 18px;
+        color: darkcyan;
+    }
+
+    input {
+        outline: none;
+        background: transparent;
+        border-radius: 12px;
+        border: 1px solid rgb(26, 144, 207);
+        padding-left: 10px;
+        width: 300px;
+        height: 30px;
+    }
+
+    .submit {
+        background: rgb(26, 144, 207);
+        border-radius: 12px;
+        color: white;
+        width: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        padding: 0px;
+        height: 30px;
+        margin-left: 8px;
+    }
+
+    .top-right {
+        display: flex;
+        margin-top: 25px;
+        justify-content: center;
+        margin-bottom: 25px;
+    }
+
+    .card {
+        height: 100%;
+        width: 100%;
+        background: #f1f1f1;
+        border-radius: 12px;
+        padding: 5px 15px;
+        margin-bottom: 15px;
+        padding-bottom: 40px;
+    }
+
+        .card span {
+            color: black;
+            font-size: 14px;
+        }
+
+        .card div {
+            margin-bottom: 15px;
+        }
+
+        .card .title {
+            margin-top: 15px;
+        }
+
+    .second-text {
+        color: rgb(26, 144, 207) !important;
+    }
+
+
+    .create a {
+        color: white !important;
+        font-size: 16px;
+        background: rgb(26, 144, 207);
+        border-radius: 12px;
+        width: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 8px !important;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .create a:hover {
+        transform: scale(1.08)
+    }
+
+    .create {
+        margin-bottom: 20px;
+    }
+    .ActionLinks {
+        position: absolute;
+        bottom: 10px;
+        left: 20px;
+        margin: auto;
+    }
+
+    .ActionLinks span a {
+        color: black;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .ActionLinks span a:hover {
+        color: rgb(26, 144, 207);
+    }
+</style>
+<div class="main">
+    <div class="go-back">
+        <img src="data:image/png;base64,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" alt="Alternate Text" />
+        <div class="go-back_title">
+            <span>
+                @*@Html.ActionLink("Home", "Home/Index","CompanyManagement")*@
+                <a href="../../">Home Page</a>
+            </span>
+        </div>
+    </div>
+    <form action="formSearch" method="post">
+        <div class="top-right" id="SearchBox">
+            <input type="Text" name="SearchWord" value="" id="SearchWord" placeholder="Search" />
+            <input type="submit" name="submitSearch" value="Search" class="submit"/>
+        </div>
+    </form>
+
+    <div class="create">
+        @Html.ActionLink("Create New", "Create")
+    </div>
+    <div class="wrapper">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3">
+                    <div class="card">
+
+                        <div class="title">
+                            <span>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </span>
+                            <span class="second-text">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </span>
+                        </div>
+                        <div class="activities">
+                            <span>
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </span>
+                            <span class="second-text">
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </span>
+                        </div>
+                        <div class="address">
+                            <span>
+                                @Html.DisplayNameFor(model => model.City)
+                            </span>
+                            <span class="second-text">
+                                @Html.DisplayFor(modelItem => item.City)
+                            </span>
+                        </div>
+                        <div class="address">
+                            <span>
+                                @Html.DisplayNameFor(model => model.Sex)
+                            </span>
+                            <span class="second-text">
+                                @Html.DisplayFor(modelItem => item.Sex)
+                            </span>
+                        </div>
+                        <div class="address">
+                            <span>
+                                @Html.DisplayNameFor(model => model.UserID)
+                            </span>
+                            <span class="second-text">
+                                @Html.DisplayFor(modelItem => item.UserID)
+                            </span>
+                        </div>
+                        <div class="address">
+                            <span>
+                                @Html.DisplayNameFor(model => model.DateOfBirth)
+                            </span>
+                            <span class="second-text">
+                                @Html.DisplayFor(modelItem => item.DateOfBirth)
+                            </span>
+                        </div>
+                        <div class="address">
+                            <span>
+                                @Html.DisplayNameFor(model => model.MobileNumber)
+                            </span>
+                            <span class="second-text">
+                                @Html.DisplayFor(modelItem => item.MobileNumber)
+                            </span>
+                        </div>
+                        <div class="ActionLinks">
+                            <span>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            </span>
+                            <span>
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+
+                            </span>
+                            <span>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+
+                            </span>
+                            <span>
+                                @Html.ActionLink("ConnectTo", "ConnectPersonToCompany", new { id = item.Id })
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    @*<table class="table">
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sex)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MobileNumber)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                        @Html.ActionLink("ConnectTo", "ConnectToCpompany", new { id = item.Id })
+
+                    </td>
+                </tr>
+            }
+
+        </table>*@
+</div>
+@*<form action="formSearch" method="post">
+    <div class="top-right" id="SearchBox">
+        <input type="Text" name="SearchWord" value="" id="SearchWord" placeholder="Search" />
+        <input type="submit" name="submitSearch" value="Search" />
+    </div>
+</form>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sex)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MobileNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sex)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfBirth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MobileNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+            @Html.ActionLink("ConnectTo", "ConnectToCpompany", new { id = item.Id })
+
+
+        </td>
+    </tr>
+}
+
+</table>*@

@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    @@-webkit-keyframes cardAnimation {
+        0% {
+            transform: rotateY(-90deg);
+        }
+
+        100% {
+            transform: rotateY(0deg);
+            box-shadow: unset;
+        }
+    }
+    @@-webkit-keyframes cardAnimationShadow {
+        0% {
+            box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 50%);
+        }
+
+        100% {
+
+        }
+    }
+
+    main {
+        height: 100vh;
+        width: 100%;
+        margin-top: 30px;
+    }
+    h3 {
+        text-align: center;
+        color: #422F2B;
+    }
+    .menu-card {
+        width: 80%;
+        padding: 15px;
+        height: 300px;
+        margin: auto;
+        border-radius: 12px;
+        animation-name: cardAnimationShadow;
+        animation-duration: 0.5s;
+        transition: 0.3s;
+        cursor: pointer;
+        box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 50%);
+        border-radius: 12px;
+        background: #f1f1f1;
+
+    }
+        .menu-card:hover {
+            transform: scale(1.05);
+        }
+    .wrapper {
+        margin-top: 80px;
+    }
+    .card {
+        animation-name: cardAnimation;
+        animation-duration: 0.5s;
+    }
+    .card2 {
+        animation-name: cardAnimation;
+        animation-duration: 0.5s;
+    }
+    .card3 {
+        animation-name: cardAnimation;
+        animation-duration: 0.5s;
+    }
+    .title {
+        font-size: 22px;
+        color: #404040;
+    }
+    .color {
+        font-size: 21px;
+    }
+        .color a {
+            text-decoration: none;
+            color: black;
+        }
+</style>
+<div class="main">
+
+  <main>
+      <div class="row">
+          <h3 class="title">Choose section</h3>
+          <div class="wrapper">
+              <div class="col-md-4 card">
+                  <div class="menu-card">
+                      <h3 class="color">
+                          @Html.ActionLink("Company List", "Index/formSearch", "CompanyManagement")
+                      </h3>
+                  </div>
+              </div>
+               
+              <div class="col-md-4 card2">
+                  <div class="menu-card">
+
+                      <h3 class="color">
+                          @Html.ActionLink("Person List", "Index/formSearch", "PersonsManagment")
+                      </h3>
+                  </div>
+              </div>
+
+              <div class="col-md-4 card3">
+                  <div class="menu-card">
+                      <h3 class="color">
+                          @Html.ActionLink("Contact", "Contact", "Home")
+
+                      </h3>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+    
+</div>
